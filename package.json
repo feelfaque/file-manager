@@ -1,0 +1,12 @@
+{
+  "name": "file-manager",
+  "version": "1.0.0",
+  "description": "a basic node js file manager app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run start -- --username=your_username"
+  },
+  "author": "a.saenko2109@gmail.com",
+  "license": "ISC"
+}
