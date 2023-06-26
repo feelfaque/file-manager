@@ -9,7 +9,14 @@ import { renameFile } from "./functions/renameFile.js";
 import { copyFile } from "./functions/copyFile.js";
 import { moveFile } from "./functions/moveFile.js";
 import { deleteFile } from "./functions/deleteFile.js";
-
+import { getEOL } from "./functions/getEOL.js";
+import { getCPUS } from "./functions/getCPUS.js";
+import { getUsername } from "./functions/getUsername.js";
+import { getArch } from "./functions/getArch.js";
+import { calculateHash } from "./functions/calculateHash.js";
+import { compressFile } from "./functions/compressFile.js";
+import { decompressFile } from "./functions/decompressFile.js";
+ 
 const fileManager = () => {
   const homeDirectory = homedir();
   let currentDirectory = homeDirectory;
@@ -34,17 +41,33 @@ const fileManager = () => {
     } else if (command.startsWith("cat")) {
       readFile(command);
     } else if (command.startsWith("add")) {
-        createEmptyFile(currentDirectory, command);
+      createEmptyFile(currentDirectory, command);
     } else if (command.startsWith("rn")) {
-        renameFile(command);
+      renameFile(command);
     } else if (command.startsWith("cp")) {
-        copyFile(command);
-    } else if(command.startsWith("mv")) {
-        moveFile(command);
+      copyFile(command);
+    } else if (command.startsWith("mv")) {
+      moveFile(command);
     } else if (command.startsWith("rm")) {
-        deleteFile(command);
+      deleteFile(command);
+    } else if ((command = "os --EOL")) {
+      getEOL();
+    } else if (command === "os --cpus") {
+      getCPUS();
+    } else if (command === "os --homedir") {
+      console.log(homedir());
+    } else if (command === "os --username") {
+      getUsername();
+    } else if (command === "os --architecture") {
+      getArch();
+    } else if (command.startsWith("hash")) {
+      calculateHash(command);
+    } else if (command.startsWith("compress")) {
+      compressFile(command);
+    } else if (command.startsWith("decompress")) {
+      decompressFile(command)
     } else {
-        console.log("Invalid input");
+      console.log("Invalid input");
     }
   });
 };
