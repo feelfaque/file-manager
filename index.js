@@ -17,6 +17,8 @@ import { calculateHash } from "./functions/calculateHash.js";
 import { compressFile } from "./functions/compressFile.js";
 import { decompressFile } from "./functions/decompressFile.js";
 import { goodbye } from "./functions/goodbye.js";
+import { goToDir } from "./functions/goToDir.js";
+import { goUp } from "./functions/goUp.js";
 
 const fileManager = () => {
   const homeDirectory = homedir();
@@ -31,13 +33,10 @@ const fileManager = () => {
     if (command === "ls") {
       listFiles(currentDirectory);
     } else if (command.startsWith("cd ")) {
-      currentDirectory = `${currentDirectory}/${command.slice(3)}`;
+      currentDirectory = goToDir(currentDirectory, command);
       displayDirectory(currentDirectory);
     } else if (command === "up") {
-      currentDirectory = currentDirectory.substring(
-        0,
-        currentDirectory.lastIndexOf("/")
-      );
+      currentDirectory = goUp(currentDirectory);
       displayDirectory(currentDirectory);
     } else if (command.startsWith("cat")) {
       readFile(command);
