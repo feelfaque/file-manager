@@ -1,10 +1,10 @@
 import { createReadStream, createWriteStream } from "node:fs";
-import { brotliCompress } from "node:zlib";
-import { getFirstArg } from "../helpers/getFirstArg";
-import { getSecondArg } from "../helpers/getSecondArg";
-import { getFileName } from "../helpers/getFileName";
+import { createBrotliCompress } from "node:zlib";
+import { getFirstArg } from "../helpers/getFirstArg.js";
+import { getSecondArg } from "../helpers/getSecondArg.js";
+import { getFileName } from "../helpers/getFileName.js";
 
-const compressFile = async (command) => {
+export const compressFile = async (command) => {
   const filePath = getFirstArg(command);
   const destPath = getSecondArg(command);
   const fileName = getFileName(destPath);
@@ -12,7 +12,7 @@ const compressFile = async (command) => {
   const readableStream = createReadStream(filePath);
   const writableStream = createWriteStream(destPath);
 
-  const brotli = brotliCompress();
+  const brotli = createBrotliCompress();
   const stream = readableStream.pipe(brotli).pipe(writableStream);
   stream.on("error", () => {
     console.error("Operation failed");

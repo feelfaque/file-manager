@@ -1,8 +1,10 @@
-import { brotliDecompress } from "node:zlib";
+import { createBrotliDecompress } from "node:zlib";
 import { createReadStream, createWriteStream } from "node:fs";
-import { getFileName } from "../helpers/getFileName";
+import { getFirstArg } from "../helpers/getFirstArg.js";
+import { getSecondArg } from "../helpers/getSecondArg.js";
+import { getFileName } from "../helpers/getFileName.js";
 
-export const decompressFile = async () => {
+export const decompressFile = async (command) => {
   const filePath = getFirstArg(command);
   const destPath = getSecondArg(command);
   const fileName = getFileName(destPath);
@@ -10,7 +12,7 @@ export const decompressFile = async () => {
   const readableStream = createReadStream(filePath);
   const writableStream = createWriteStream(destPath);
 
-  const brotli = brotliDecompress();
+  const brotli = createBrotliDecompress();
   const stream = readableStream.pipe(brotli).pipe(writableStream);
 
   stream.on("error", () => {
@@ -20,4 +22,3 @@ export const decompressFile = async () => {
     console.log(`${fileName} is decompressed`);
   });
 };
-

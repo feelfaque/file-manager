@@ -16,7 +16,7 @@ import { getArch } from "./functions/getArch.js";
 import { calculateHash } from "./functions/calculateHash.js";
 import { compressFile } from "./functions/compressFile.js";
 import { decompressFile } from "./functions/decompressFile.js";
- 
+
 const fileManager = () => {
   const homeDirectory = homedir();
   let currentDirectory = homeDirectory;
@@ -50,7 +50,7 @@ const fileManager = () => {
       moveFile(command);
     } else if (command.startsWith("rm")) {
       deleteFile(command);
-    } else if ((command = "os --EOL")) {
+    } else if (command === "os --EOL") {
       getEOL();
     } else if (command === "os --cpus") {
       getCPUS();
@@ -65,7 +65,9 @@ const fileManager = () => {
     } else if (command.startsWith("compress")) {
       compressFile(command);
     } else if (command.startsWith("decompress")) {
-      decompressFile(command)
+      decompressFile(command);
+    } else if (command === ".close") {
+      rl.close();
     } else {
       console.log("Invalid input");
     }
