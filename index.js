@@ -39,17 +39,17 @@ const fileManager = () => {
       currentDirectory = goUp(currentDirectory);
       displayDirectory(currentDirectory);
     } else if (command.startsWith("cat")) {
-      readFile(command);
+      readFile(currentDirectory, command);
     } else if (command.startsWith("add")) {
       createEmptyFile(currentDirectory, command);
     } else if (command.startsWith("rn")) {
-      renameFile(command);
+      renameFile(currentDirectory, command);
     } else if (command.startsWith("cp")) {
-      copyFile(command);
+      copyFile(currentDirectory, command);
     } else if (command.startsWith("mv")) {
-      moveFile(command);
+      moveFile(currentDirectory, command);
     } else if (command.startsWith("rm")) {
-      deleteFile(command);
+      deleteFile(currentDirectory, command);
     } else if (command === "os --EOL") {
       getEOL();
     } else if (command === "os --cpus") {
@@ -61,11 +61,11 @@ const fileManager = () => {
     } else if (command === "os --architecture") {
       getArch();
     } else if (command.startsWith("hash")) {
-      calculateHash(command);
+      calculateHash(currentDirectory, command);
     } else if (command.startsWith("compress")) {
-      compressFile(command);
+      compressFile(currentDirectory, command);
     } else if (command.startsWith("decompress")) {
-      decompressFile(command);
+      decompressFile(currentDirectory, command);
     } else if (command === ".close") {
       rl.close();
     } else {

@@ -1,10 +1,13 @@
 import { createHash } from "node:crypto";
 import { existsSync, readFile } from "node:fs";
 import { getFirstArg } from "../helpers/getFirstArg.js";
+import { isAbsolute, join } from "node:path";
 
-export const calculateHash = async (command) => {
-  const fileToHash = getFirstArg(command);
-
+export const calculateHash = async (currentDirectory, command) => {
+  let fileToHash = getFirstArg(command);
+  if (!isAbsolute(fileToHash)) {
+    fileToHash = join(currentDirectory, fileToHash);
+  }
   if (existsSync(fileToHash)) {
     readFile(fileToHash, "utf8", (err, data) => {
       if (err) {

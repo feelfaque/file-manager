@@ -1,5 +1,5 @@
 export const getFirstArg = (command) => {
-    if (command.indexOf("'") ) {
+    if (command.includes("'") ) {
         return command
           .slice(command.indexOf("'") + 1, command.lastIndexOf("'"))
           .split("' '")[0];
