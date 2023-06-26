@@ -16,6 +16,7 @@ import { getArch } from "./functions/getArch.js";
 import { calculateHash } from "./functions/calculateHash.js";
 import { compressFile } from "./functions/compressFile.js";
 import { decompressFile } from "./functions/decompressFile.js";
+import { goodbye } from "./functions/goodbye.js";
 
 const fileManager = () => {
   const homeDirectory = homedir();
@@ -71,6 +72,12 @@ const fileManager = () => {
     } else {
       console.log("Invalid input");
     }
+  })
+  .on("SIGINT", () => {
+    rl.close()
+  })
+  .on("close", () => {
+    goodbye()
   });
 };
 
