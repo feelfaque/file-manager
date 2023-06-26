@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { createBrotliDecompress } from "node:zlib";
 import { createReadStream, createWriteStream } from "node:fs";
 import { getFirstArg } from "../helpers/getFirstArg.js";
@@ -9,16 +10,20 @@ export const decompressFile = async (command) => {
   const destPath = getSecondArg(command);
   const fileName = getFileName(destPath);
 
-  const readableStream = createReadStream(filePath);
-  const writableStream = createWriteStream(destPath);
+  if (existsSync(filePath)) {
+    const readableStream = createReadStream(filePath);
+    const writableStream = createWriteStream(destPath);
 
-  const brotli = createBrotliDecompress();
-  const stream = readableStream.pipe(brotli).pipe(writableStream);
+    const brotli = createBrotliDecompress();
+    const stream = readableStream.pipe(brotli).pipe(writableStream);
 
-  stream.on("error", () => {
-    console.error("Operation failed");
-  });
-  stream.on("finish", () => {
-    console.log(`${fileName} is decompressed`);
-  });
+    stream.on("error", () => {
+      console.error("Operation failed");
+    });
+    stream.on("finish", () => {
+      console.log(`${fileName} is decompressed`);
+    });
+  } else {
+    console.error("File doesn't exist");
+  }
 };

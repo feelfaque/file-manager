@@ -1,4 +1,4 @@
-import { createReadStream, createWriteStream } from "node:fs";
+import { createReadStream, createWriteStream, existsSync } from "node:fs";
 import { join } from "node:path";
 import { getFirstArg } from "../helpers/getFirstArg.js";
 import { getSecondArg } from "../helpers/getSecondArg.js";
@@ -10,11 +10,15 @@ export const copyFile = (command) => {
   const fileName = getFileName(oldPath);
   const newPath = join(newDir, fileName);
 
-  const readableStream = createReadStream(oldPath, "utf-8");
-  const writableStream = createWriteStream(newPath, { encoding: "utf-8" });
+  if (existsSync(oldPath)) {
+    const readableStream = createReadStream(oldPath, "utf-8");
+    const writableStream = createWriteStream(newPath, { encoding: "utf-8" });
 
-  readableStream.on("error", (err) => console.error("Operation failed"));
-  writableStream.on("error", (err) => console.error("Operation failed"));
+    readableStream.on("error", (err) => console.error("Operation failed"));
+    writableStream.on("error", (err) => console.error("Operation failed"));
 
-  readableStream.pipe(writableStream);
+    readableStream.pipe(writableStream);
+  } else {
+    console.error("File doesn't exist");
+  }
 };
