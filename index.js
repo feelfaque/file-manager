@@ -40,36 +40,51 @@ const fileManager = () => {
       displayDirectory(currentDirectory);
     } else if (command.startsWith("cat")) {
       readFile(currentDirectory, command);
+      displayDirectory(currentDirectory);
     } else if (command.startsWith("add")) {
       createEmptyFile(currentDirectory, command);
+      displayDirectory(currentDirectory);
     } else if (command.startsWith("rn")) {
       renameFile(currentDirectory, command);
+      displayDirectory(currentDirectory);
     } else if (command.startsWith("cp")) {
       copyFile(currentDirectory, command);
+      displayDirectory(currentDirectory);
     } else if (command.startsWith("mv")) {
       moveFile(currentDirectory, command);
+      displayDirectory(currentDirectory);
     } else if (command.startsWith("rm")) {
       deleteFile(currentDirectory, command);
+      displayDirectory(currentDirectory);
     } else if (command === "os --EOL") {
       getEOL();
+      displayDirectory(currentDirectory);
     } else if (command === "os --cpus") {
       getCPUS();
+      displayDirectory(currentDirectory);
     } else if (command === "os --homedir") {
       console.log(homedir());
+      displayDirectory(currentDirectory);
     } else if (command === "os --username") {
       getUsername();
+      displayDirectory(currentDirectory);
     } else if (command === "os --architecture") {
       getArch();
+      displayDirectory(currentDirectory);
     } else if (command.startsWith("hash")) {
       calculateHash(currentDirectory, command);
+      displayDirectory(currentDirectory);
     } else if (command.startsWith("compress")) {
       compressFile(currentDirectory, command);
+      displayDirectory(currentDirectory);
     } else if (command.startsWith("decompress")) {
       decompressFile(currentDirectory, command);
+      displayDirectory(currentDirectory);
     } else if (command === ".close") {
       rl.close();
     } else {
       console.log("Invalid input");
+      displayDirectory(currentDirectory);
     }
   })
   .on("SIGINT", () => {
