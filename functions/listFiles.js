@@ -16,7 +16,7 @@ export const listFiles = (dir) => {
           file.type = "-";
         }
       });
-      console.table(files);
+      console.table(files.sort((a, b) => (a.type > b.type) ? 1: -1));
     }
   });
 };
